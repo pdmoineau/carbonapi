@@ -16,7 +16,6 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pwd
+        cat /etc/os-release
         make
-        pwd
         ls -ltra

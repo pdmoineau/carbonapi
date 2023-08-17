@@ -16,5 +16,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        pwd
         make
-        ls -l path/to/carbonapi/binary/directory
+        pwd
+        ls -ltra

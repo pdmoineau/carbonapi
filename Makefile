@@ -16,6 +16,9 @@ debug: GCFLAGS += -gcflags=all='-l -N'
 
 LDFLAGS = -ldflags '-X main.BuildVersion=$(VERSION)'
 
+GOOS = linux
+GOARCH = arm64
+
 TAGS := -tags cairo
 nocairo: TAGS =
 
@@ -29,8 +32,8 @@ nocairo: build
 debug: build
 
 build:
-	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
-	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
 
 lint:
 	golangci-lint run

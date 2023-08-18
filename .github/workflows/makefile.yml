@@ -2,9 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "pmoineau.v0.3.0" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "pmoineau.v0.3.0" ]
+    branches: [ "master" ]
 
 jobs:
   build:

@@ -34,6 +34,6 @@ jobs:
         go mod tidy
         go mod vendor
         which go
-        cp -r $GOPATH/pkg/mod/cache/download/* ./vendor/
+        cp -r /opt/hostedtoolcache/go/1.20.7/x64/pkg/mod/cache/download/* ./vendor/
         make
         ls -ltra

@@ -2,7 +2,7 @@ name: Docker Build & Publish
 
 on:
   push:
-    branches: [ "pmoineau.v0.3.0" ]
+    branches: [ "master" ]
 
 jobs:
   build_and_publish:

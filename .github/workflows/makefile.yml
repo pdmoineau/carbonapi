@@ -18,6 +18,6 @@ jobs:
       run: |
         ls -ltra
         cat /etc/os-release
-        go version
+        apt-get install -y libcairo2-dev
         make
         ls -ltra

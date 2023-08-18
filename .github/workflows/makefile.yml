@@ -33,7 +33,5 @@ jobs:
         sudo apt-get install -y libcairo2-dev
         go mod tidy
         go mod vendor
-        which go
-        cp -r /opt/hostedtoolcache/go/1.20.7/x64/pkg/mod/cache/download/* ./vendor/
         make
         ls -ltra

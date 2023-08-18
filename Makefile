@@ -16,8 +16,6 @@ jobs:
 
     - name: Make
       run: |
-        ls -ltra
         cat /etc/os-release
-        go version
         make
         ls -ltra

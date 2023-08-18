@@ -16,7 +16,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        ls -ltra
         cat /etc/os-release
-        which go
         make
         ls -ltra

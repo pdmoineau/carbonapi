@@ -22,4 +22,6 @@ jobs:
         run: |
           docker build . --file docker/carbonapi/Dockerfile --tag carbonapi-booking:0.3.0
           docker images
+          docker tag carbonapi-booking ${{ secrets.DOCKER_USERNAME }}/carbonapi-booking:0.3.0
+          docker images
           docker push ${{ secrets.DOCKER_USERNAME }}/carbonapi-booking:0.3.0

@@ -1,21 +1,45 @@
-name: Makefile CI
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	PKGCONF = PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig"
+else
+	PKGCONF =
+endif
 
-on:
-  push:
-    branches: [ "pmoineau.v0.3.0" ]
-  pull_request:
-    branches: [ "pmoineau.v0.3.0" ]
+GO ?= go
+VERSION ?= $(shell git rev-parse --short HEAD)
 
-jobs:
-  build:
+PKG_CARBONAPI=github.com/bookingcom/carbonapi/cmd/carbonapi
+PKG_CARBONZIPPER=github.com/bookingcom/carbonapi/cmd/carbonzipper
 
-    runs-on: ubuntu-latest
+GCFLAGS :=
+debug: GCFLAGS += -gcflags=all='-l -N'
 
-    steps:
-    - uses: actions/checkout@v3
+LDFLAGS = -ldflags '-X main.BuildVersion=$(VERSION)'
 
-    - name: Make
-      run: |
-        cat /etc/os-release
-        make
-        ls -ltra
+TAGS := -tags cairo
+nocairo: TAGS =
+
+### Targets ###
+
+all: build
+
+nocairo: build
+
+.PHONY: debug
+debug: build
+
+build:
+	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
+	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
+
+lint:
+	golangci-lint run
+
+test:
+	$(PKGCONF) $(GO) test ./... -race -coverprofile=coverage.txt -covermode=atomic
+
+clean:
+	rm -f carbonapi carbonzipper
+
+authors:
+	git log --format="%an" | sort | uniq > AUTHORS.txt

@@ -32,8 +32,10 @@ nocairo: build
 debug: build
 
 build:
-	GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
-	GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
+	#GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
+	#GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
+	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
+	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
 
 lint:
 	golangci-lint run

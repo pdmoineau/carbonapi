@@ -32,6 +32,7 @@ nocairo: build
 debug: build
 
 build:
+	go get github.com/martine/gocairo/cairo
 	#GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
 	#GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
 	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)

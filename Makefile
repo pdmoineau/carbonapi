@@ -1,51 +1,23 @@
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-	PKGCONF = PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig"
-else
-	PKGCONF =
-endif
+name: Makefile CI
 
-GO ?= go
-VERSION ?= $(shell git rev-parse --short HEAD)
+on:
+  push:
+    branches: [ "pmoineau.v0.3.0" ]
+  pull_request:
+    branches: [ "pmoineau.v0.3.0" ]
 
-PKG_CARBONAPI=github.com/bookingcom/carbonapi/cmd/carbonapi
-PKG_CARBONZIPPER=github.com/bookingcom/carbonapi/cmd/carbonzipper
+jobs:
+  build:
 
-GCFLAGS :=
-debug: GCFLAGS += -gcflags=all='-l -N'
+    runs-on: ubuntu-latest
 
-LDFLAGS = -ldflags '-X main.BuildVersion=$(VERSION)'
+    steps:
+    - uses: actions/checkout@v3
 
-GOOS = linux
-GOARCH = arm64
-
-TAGS := -tags cairo
-nocairo: TAGS =
-
-### Targets ###
-
-all: build
-
-nocairo: build
-
-.PHONY: debug
-debug: build
-
-build:
-	go get github.com/martine/gocairo/cairo
-	#GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
-	#GOOS=$(GOOS) GOARCH=$(GOARCH) $(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
-	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONAPI)
-	$(PKGCONF) $(GO) build -mod vendor $(TAGS) $(LDFLAGS) $(GCFLAGS) $(PKG_CARBONZIPPER)
-
-lint:
-	golangci-lint run
-
-test:
-	$(PKGCONF) $(GO) test ./... -race -coverprofile=coverage.txt -covermode=atomic
-
-clean:
-	rm -f carbonapi carbonzipper
-
-authors:
-	git log --format="%an" | sort | uniq > AUTHORS.txt
+    - name: Make
+      run: |
+        ls -ltra
+        cat /etc/os-release
+        go version
+        make
+        ls -ltra

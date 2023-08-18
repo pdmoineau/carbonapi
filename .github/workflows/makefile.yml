@@ -12,12 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.11  # Use an appropriate Go version
+
+    - name: Clean
+      run: |
+        go clean -modcache
+        rm -rf vendor
 
     - name: Make
       run: |
         ls -ltra
         cat /etc/os-release
         sudo apt-get install -y libcairo2-dev
+        go mod tidy
+        go mod vendor
         make
         ls -ltra

@@ -20,4 +20,4 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker push <DOCKER_USERNAME>/carbonapi:0.3.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/carbonapi:0.3.0

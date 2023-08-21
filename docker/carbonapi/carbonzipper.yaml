@@ -18,8 +18,7 @@ backendsByDC:
       clusters:
           - name: "sys"
             protocolBackends:
-            - grpc: "go-carbon:7004"
-              http: "http://go-carbon:8080"
+              http: "http://carbonj-p10:2001"
 
 graphite09compat: true
 
